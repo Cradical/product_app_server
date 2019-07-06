@@ -1,19 +1,22 @@
 'use strict'
 module.exports = (sequelize, DataTypes) => {
-  const Product = sequelize.define('Product', {
-    name: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    price: DataTypes.INTEGER,
-    img_url: DataTypes.TEXT
-  }, {})
+  const product = sequelize.define(
+    'product',
+    {
+      name: DataTypes.STRING,
+      description: DataTypes.TEXT,
+      price: DataTypes.INTEGER,
+      img_url: DataTypes.TEXT
+    },
+    {}
+  )
 
-  Product.associate = function(models) {
+  product.associate = function(models) {
     // associations can be defined here
-    Product.belongsTo(models.Category, {
+    product.belongsTo(models.category, {
       foreignKey: 'category_id'
     })
-
   }
 
-  return Product
+  return product
 }

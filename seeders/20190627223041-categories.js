@@ -12,15 +12,21 @@ module.exports = {
         isBetaMember: false
       }], {})
     */
-    return queryInterface.bulkInsert('Categories', [
-      {
-        name: 'Clothing'
-      }, {
-        name: 'Electronics'
-      }, {
-        name: 'Miscellaneous'
-      }
-    ], {})
+    return queryInterface.bulkInsert(
+      'categories',
+      [
+        {
+          name: 'clothing'
+        },
+        {
+          name: 'electronics'
+        },
+        {
+          name: 'miscellaneous'
+        }
+      ],
+      {}
+    )
   },
 
   down: (queryInterface, Sequelize) => {
@@ -31,6 +37,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {})
     */
-    return queryInterface.bulkDelete('Categories', null, {})
+    return queryInterface.bulkDelete('categories', null, {})
   }
 }

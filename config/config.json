@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "matt.winzer",
+    "username": "conrad",
     "password": null,
-    "database": "my_store_db",
+    "database": "product_app_db",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
@@ -15,7 +15,7 @@
   },
   "production": {
     "username": "root",
-    "password": null,
+    "password": "process.env.DATABASE_PROD",
     "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "mysql"

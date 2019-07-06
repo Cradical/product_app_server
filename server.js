@@ -11,11 +11,10 @@ app.use(morgan('dev'))
 
 // Sequelize Models
 const db = require('./models')
-const Category = db.Category
-const Product = db.Product
+const category = db.category
+const product = db.product
 
 // Router files
-
 
 // Routes
 app.get('/api/test', (req, res) => {
@@ -27,9 +26,11 @@ app.get('/api/test', (req, res) => {
 })
 
 app.get('/api/categories', (req, res, next) => {
-  Category.findAll({
-    include: [{ model: Product }]
-  })
+  console.log(category)
+  category
+    .findAll({
+      include: [{ model: product }]
+    })
     .then(categories => {
       res.json({
         categories
@@ -41,9 +42,10 @@ app.get('/api/categories', (req, res, next) => {
 })
 
 app.get('/api/products', (req, res, next) => {
-  Product.findAll({
-    include: [{ model: Category }]
-  })
+  product
+    .findAll({
+      include: [{ model: category }]
+    })
     .then(products => {
       res.json({
         products
@@ -53,7 +55,7 @@ app.get('/api/products', (req, res, next) => {
       next(error)
     })
 })
- 
+
 // Error handling
 // The following 2 `app.use`'s MUST follow ALL your routes/middleware
 app.use(notFound)
@@ -61,7 +63,9 @@ app.use(errorHandler)
 
 // eslint-disable-next-line
 function notFound(req, res, next) {
-  res.status(404).send({ error: 'Not found!', status: 404, url: req.originalUrl })
+  res
+    .status(404)
+    .send({ error: 'Not found!', status: 404, url: req.originalUrl })
 }
 
 // eslint-disable-next-line
@@ -74,4 +78,3 @@ function errorHandler(err, req, res, next) {
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`)
 })
-

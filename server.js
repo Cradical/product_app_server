@@ -58,20 +58,17 @@ app.get('/api/products', (req, res, next) => {
     })
 })
 
-app.post('/api/checkout', async (req, res, next) => {
-  try {
-    return stripe.charge
-      .create({
-        amount: req.body.amount,
-        currency: 'usd',
-        source: req.body.tokenId,
-        description: 'test payment',
-      })
-      .then(result => res.status(200).json(result))
-  } catch (error) {
-    console.warn(next)
-    alert('Sorry, an error has occured :(')
-  }
+app.post('/api/checkout', (req, res, next) => {
+  console.log(req.body)
+  return stripe.charges
+    .create({
+      amount: req.body.amount,
+      currency: 'usd',
+      source: req.body.token,
+      description: req.body.description,
+    })
+    .then(result => res.status(200).json(result))
+    .catch(error => next(error))
 })
 
 // --------------------------------------------------------

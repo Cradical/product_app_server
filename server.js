@@ -3,6 +3,7 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const bodyParser = require('body-parser')
 
 const PORT = process.env.PORT || 4000
 const app = express()
@@ -10,6 +11,7 @@ const app = express()
 // Middleware
 app.use(cors())
 app.use(morgan('dev'))
+app.use(bodyParser.json())
 
 // Sequelize Models
 const db = require('./models')
@@ -59,12 +61,11 @@ app.get('/api/products', (req, res, next) => {
 })
 
 app.post('/api/checkout', (req, res, next) => {
-  console.log(req.body)
   return stripe.charges
     .create({
       amount: req.body.amount,
       currency: 'usd',
-      source: req.body.token,
+      source: req.body.tokenId,
       description: req.body.description,
     })
     .then(result => res.status(200).json(result))
